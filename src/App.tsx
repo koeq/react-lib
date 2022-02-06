@@ -1,24 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import { useFetch } from "./utils/useFetch";
+
+const getData = async (
+  url: string,
+  setData: React.Dispatch<React.SetStateAction<undefined>>
+) => {
+  const res = await fetch(url);
+  const result = await res.json();
+  setData(result);
+};
 
 function App() {
+  const url = "https://api.github.com/users/koeq";
+  const { data, status } = useFetch(url);
+
+  console.log("rendered");
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h2>useFetch demo</h2>
+      {status === "loading" ? (
+        "loading..."
+      ) : (
+        <pre>{JSON.stringify(data, null, 2)}</pre>
+      )}
     </div>
   );
 }
