@@ -15,8 +15,6 @@ function App() {
   const url = "https://api.github.com/users/koeq";
   const { data, status } = useFetch(url);
 
-  console.log("rendered");
-
   return (
     <div className="App">
       <h2>useFetch demo</h2>
